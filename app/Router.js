@@ -11,6 +11,7 @@ import createStackNavigator from "@react-navigation/stack/src/navigators/createS
 
 import HomeScreen from "../components/pages/HomeScreen";
 import AddItems from "../components/pages/AddItems";
+import itemsInput from "../components/widgets/itemsInput";
 
 
 const Stack = createStackNavigator();
