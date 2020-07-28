@@ -12,8 +12,8 @@ import {
     TextInput,
     TouchableOpacity,
     Button,
-    FlatList,
-  
+    FlatList, TouchableHighlight,
+
 
 } from 'react-native';
 
@@ -23,30 +23,14 @@ import ItemsInput from "../widgets/itemsInput";
 export default AddItems = ({navigation}) => {
 
 
-    const SearchFilterFunction = (task, action) => {
-            let newTasksState = [...tasks];
-            switch (action) {
-                case'rechercher':
-                    newTasksState = [...tasks, {id: tasks.length, content: task}]
-                    setTextInputValue('');
-                    break;
-                case 'delete':
-                    // recup l'id a supprimer puis crée un nouveau tableau sans l'id
-                    newTasksState = tasks.filter(({id}) => id !== task.id)
-                    console.log(newTasksState)
-                    break;
-                default:
-                    break;
-            }
-            //ici on sauvegarde la ,nouvelle valeur de newTasksState en fonction du case utilisé
-            setTasks(newTasksState);
-            // on persisite
-    }
 
-    const [items, setItems] = useState([]
-    )
+
+    const [items, setItems] = useState([])
     const [textInputValue, setTextInputValue] = useState('')
-
+    const [fillContainer, setFillContainer] = useState(
+        []
+    )
+    
 
     useEffect(() => {
         getItems()
@@ -55,9 +39,11 @@ export default AddItems = ({navigation}) => {
 
 
     const getItems = async () => {
+        if (textInputValue !== ''){
+
 
         let response = await fetch(
-            'https://trackapi.nutritionix.com/v2/search/instant?query=grilled cheese', {
+            'https://trackapi.nutritionix.com/v2/search/instant?query=' + textInputValue, {
                 headers: {
                     'x-app-id': '05e754e7',
                     'x-app-key': '107ea2f449d4e88d05e32f46d25b7746'
@@ -67,11 +53,17 @@ export default AddItems = ({navigation}) => {
         let jsonResponse = await response.json();
 
 //(jsonResponse.network car nous il s'agit d'un objet/jsonResponse si ça avait été un tableau
-        if (jsonResponse.common) {
-            setItems(jsonResponse.common);
+        if (jsonResponse) {
+            // le spread operator va étendre le tableau. Les index common et brand vont se fondre dans un tableau [data]
+            const data = [...jsonResponse.branded,...jsonResponse.common]
+            setItems(data);
+
+            }
         }
-        console.log(jsonResponse)
+
+
     }
+
 
     return (
 
@@ -83,18 +75,26 @@ export default AddItems = ({navigation}) => {
                 onChangeText={setTextInputValue}
                 value={textInputValue}
             />
-            <TouchableOpacity>
+
                 <Button title={'Chercher'}
-                        onPress={()=> SearchFilterFunction(items)}
+                        onPress={()=> getItems()}
 
                 />
+
+
                 <FlatList
                     data={items}
-                    renderItem={({ item }) => <ItemsInput items={item.tag_name}/>}
+                    //?? si tag existe afficher tag_name/si brand existe afficher brand/
+                    renderItem={({ item }) =>
+
+                        <ItemsInput items={item.tag_name??item.brand_name}/>
+
+
+                    }
                     keyExtractor={item => item.id}
                 />
 
-            </TouchableOpacity>
+
 
 
 
@@ -127,6 +127,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'yellow'
     },
+    displayFoodContainer:{
+        borderColor: 'black',
+        backgroundColor: "#DDDDDD",
+    }
 
 
 });

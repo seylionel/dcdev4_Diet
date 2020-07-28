@@ -4,7 +4,7 @@ import React from 'react';
 import {
     View,
     Text,
-    Button, StyleSheet,
+    Button, StyleSheet, TouchableOpacity,
 } from 'react-native';
 
 export default ItemsInput = ({items}) => {
@@ -12,10 +12,53 @@ export default ItemsInput = ({items}) => {
 
 
         <View>
-            <Text>{items}</Text>
+            <TouchableOpacity style={styles.displayFoodContainer}>
+            <Text  style={styles.displayFoodText}>{items}
+            </Text>
+
+                <Button
+                    title={"+"}
+                />
+
+            </TouchableOpacity>
+
         </View>
 
 
     )
 };
+const styles = StyleSheet.create({
+    homeMainContainer: {
+        flex: 1,
+    },
+    homeChildContainerBreakFast: {
+        flex: 1,
+        backgroundColor: 'green'
+    },
+    homeTitleChildBfContainer: {
+        alignItems: 'center',
+    },
+    homeChildBoxBfContainer: {
+        flex: 1,
+        backgroundColor: 'cyan'
+    },
+    homeChildContainerLunch: {
+        flex: 1,
+        backgroundColor: 'red'
+    },
+    homeChildContainerDinner: {
+        flex: 1,
+        backgroundColor: 'yellow'
+    },
+    displayFoodContainer:{
+        flexDirection:"row",
+        margin: 30,
+        justifyContent: 'space-between',
+    },
+    displayFoodText:{
+        fontSize: 20
+    }
 
+
+
+});

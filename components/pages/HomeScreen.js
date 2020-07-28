@@ -1,13 +1,15 @@
 import 'react-native-gesture-handler';
+import AddItems from "./AddItems";
 
-import React from 'react';
+import React, {useState} from 'react';
 import {
     SafeAreaView,
     StyleSheet,
     TouchableOpacity,
     View,
     Text,
-    Button
+    Button,
+    FlatList
 } from 'react-native';
 
 export default HomeScreen = ({navigation}) => {
@@ -29,6 +31,10 @@ export default HomeScreen = ({navigation}) => {
                 </View>
                 <View>
                     <Text>Petit Déjeuner</Text>
+                    <View>
+                        <Text>fqsfdqsfsq</Text>
+                        <Text>fqsfdqsfsq</Text>
+                    </View>
 
 
                 </View>
