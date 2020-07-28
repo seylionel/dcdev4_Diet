@@ -9,7 +9,8 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    Button
+    Button,
+    FlatList
 
 } from 'react-native';
 
@@ -18,7 +19,28 @@ import ItemsInput from "../widgets/itemsInput";
 
 export default AddItems = ({navigation}) => {
 
-    const [item, setItems] = useState([]
+
+    const SearchFilterFunction = (task, action) => {
+            let newTasksState = [...tasks];
+            switch (action) {
+                case'rechercher':
+                    newTasksState = [...tasks, {id: tasks.length, content: task}]
+                    setTextInputValue('');
+                    break;
+                case 'delete':
+                    // recup l'id a supprimer puis crée un nouveau tableau sans l'id
+                    newTasksState = tasks.filter(({id}) => id !== task.id)
+                    console.log(newTasksState)
+                    break;
+                default:
+                    break;
+            }
+            //ici on sauvegarde la ,nouvelle valeur de newTasksState en fonction du case utilisé
+            setTasks(newTasksState);
+            // on persisite
+    }
+
+    const [items, setItems] = useState([]
     )
     const [textInputValue, setTextInputValue] = useState('')
 
@@ -42,10 +64,10 @@ export default AddItems = ({navigation}) => {
         let jsonResponse = await response.json();
 
 //(jsonResponse.network car nous il s'agit d'un objet/jsonResponse si ça avait été un tableau
-        if (jsonResponse) {
-            setItems(jsonResponse);
+        if (jsonResponse.common) {
+            setItems(jsonResponse.common);
         }
-
+        console.log(jsonResponse)
     }
 
     return (
@@ -56,14 +78,25 @@ export default AddItems = ({navigation}) => {
             <TextInput
                 // on récupère la valeur à modifier
                 value={textInputValue}
-                placeholder={'Ajouter'}
+                placeholder={'Chercher'}
                 // onChangerText va modifier cette valeur
                 onChangeText={setTextInputValue}
             />
 
             <TouchableOpacity>
-                <Button title={'Ajouter'}/>
+                <Button title={'Chercher'}
+                        onPress={()=> SearchFilterFunction(items)}
+
+                />
+                <FlatList
+                    data={items}
+                    renderItem={({ item }) => <ItemsInput items={item.tag_name}/>}
+                    keyExtractor={item => item.id}
+                />
+
             </TouchableOpacity>
+
+
 
         </View>
 

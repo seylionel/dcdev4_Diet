@@ -1,19 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import {
+    View,
+    Text,
+    Button, StyleSheet,
+} from 'react-native';
 
-
-export default ItemsInput = props => {
+export default ItemsInput = ({items}) => {
     return (
-        <View>
 
-            <TextInput
-                // on récupère la valeur à modifier
-                value={textInputValue}
-                placeholder={'Ajouter'}
-                // onChangerText va modifier cette valeur
-                onChangeText={setTextInputValue}
-            />
+
+        <View>
+            <Text>{items}</Text>
         </View>
+
+
     )
-}
+};
 
