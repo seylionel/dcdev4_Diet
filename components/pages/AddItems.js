@@ -1,6 +1,8 @@
 import 'react-native-gesture-handler';
 import 'react-native-screens';
 import 'react-native-reanimated';
+import {SearchBar} from 'react-native-elements';
+import'react-native-vector-icons';
 
 import React, {useEffect, useState} from 'react';
 import {
@@ -10,7 +12,8 @@ import {
     TextInput,
     TouchableOpacity,
     Button,
-    FlatList
+    FlatList,
+  
 
 } from 'react-native';
 
@@ -75,14 +78,11 @@ export default AddItems = ({navigation}) => {
 
         <View style={styles.homeMainContainer}>
 
-            <TextInput
-                // on récupère la valeur à modifier
-                value={textInputValue}
-                placeholder={'Chercher'}
-                // onChangerText va modifier cette valeur
+            <SearchBar
+                placeholder="Type Here..."
                 onChangeText={setTextInputValue}
+                value={textInputValue}
             />
-
             <TouchableOpacity>
                 <Button title={'Chercher'}
                         onPress={()=> SearchFilterFunction(items)}
