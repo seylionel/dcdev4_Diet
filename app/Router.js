@@ -24,7 +24,7 @@ export default Router = () => {
 
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name={"Home"} component={HomeScreen} />
+                <Stack.Screen name={"Home"} component={HomeScreen}/>
                 <Stack.Screen name={"Aliments"} component={AddItems} />
             </Stack.Navigator>
         </NavigationContainer>

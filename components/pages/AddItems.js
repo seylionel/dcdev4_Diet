@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import 'react-native-screens';
 import 'react-native-reanimated';
 import {SearchBar} from 'react-native-elements';
-import'react-native-vector-icons';
+import 'react-native-vector-icons';
 
 import React, {useEffect, useState} from 'react';
 import {
@@ -20,9 +20,7 @@ import {
 import ItemsInput from "../widgets/itemsInput";
 
 
-export default AddItems = ({navigation}) => {
-
-
+export default AddItems = ({navigation, route}) => {
 
 
     const [items, setItems] = useState([])
@@ -30,39 +28,42 @@ export default AddItems = ({navigation}) => {
     const [fillContainer, setFillContainer] = useState(
         []
     )
-    
+
 
     useEffect(() => {
         getItems()
 
     }, [])
 
+/** Appel API **/
 
     const getItems = async () => {
-        if (textInputValue !== ''){
+        if (textInputValue !== '') {
 
 
-        let response = await fetch(
-            'https://trackapi.nutritionix.com/v2/search/instant?query=' + textInputValue, {
-                headers: {
-                    'x-app-id': '05e754e7',
-                    'x-app-key': '107ea2f449d4e88d05e32f46d25b7746'
+            let response = await fetch(
+                'https://trackapi.nutritionix.com/v2/search/instant?query=' + textInputValue, {
+                    headers: {
+                        'x-app-id': '509968a4',
+                        'x-app-key': 'ec73d2b1bc9acc563ca89ab2d54f6bf9'
+                    }
                 }
-            }
-        );
-        let jsonResponse = await response.json();
+            );
+            let jsonResponse = await response.json();
 
 //(jsonResponse.network car nous il s'agit d'un objet/jsonResponse si ça avait été un tableau
-        if (jsonResponse) {
-            // le spread operator va étendre le tableau. Les index common et brand vont se fondre dans un tableau [data]
-            const data = [...jsonResponse.branded,...jsonResponse.common]
-            setItems(data);
+            if (jsonResponse) {
+                // le spread operator va étendre le tableau. Les index common et brand vont se fondre dans un tableau [data]
+                const data = [...jsonResponse.branded, ...jsonResponse.common]
+                setItems(data);
+
 
             }
         }
 
 
     }
+
 
 
     return (
@@ -76,27 +77,23 @@ export default AddItems = ({navigation}) => {
                 value={textInputValue}
             />
 
-                <Button title={'Chercher'}
-                        onPress={()=> getItems()}
+            <Button title={'Chercher'}
+                    onPress={() => getItems()}
 
-                />
-
-
-                <FlatList
-                    data={items}
-                    //?? si tag existe afficher tag_name/si brand existe afficher brand/
-                    renderItem={({ item }) =>
-
-                        <ItemsInput items={item.tag_name??item.brand_name}/>
+            />
 
 
-                    }
-                    keyExtractor={item => item.id}
-                />
+            <FlatList
+                data={items}
+                //?? si tag existe afficher tag_name/si brand existe afficher brand/
+                renderItem={({item}) =>
+
+                    <ItemsInput items={item.tag_name ?? item.brand_name} content={item.data} navigation={navigation}/>
 
 
-
-
+                }
+                keyExtractor={item => Math.random().id}
+            />
 
         </View>
 
@@ -127,7 +124,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'yellow'
     },
-    displayFoodContainer:{
+    displayFoodContainer: {
         borderColor: 'black',
         backgroundColor: "#DDDDDD",
     }

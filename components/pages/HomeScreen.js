@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import AddItems from "./AddItems";
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     SafeAreaView,
     StyleSheet,
@@ -11,8 +11,27 @@ import {
     Button,
     FlatList
 } from 'react-native';
+import AsyncStorage from "@react-native-community/async-storage";
+import ItemsInput from "../widgets/itemsInput";
 
-export default HomeScreen = ({navigation}) => {
+
+export default HomeScreen = ({route,navigation}) => {
+    const [value,setValue] = useState([]);
+
+    useEffect(() => {
+        if(route.params){
+            let newState;
+            newState = [...value, {
+                id:route.params.id,
+                tag_name: route.params.tag_name
+            }]
+            setValue(newState)
+        }
+
+    }, [route.params])
+
+
+    const addAliments = route.params;
 
 
     return (
@@ -26,14 +45,25 @@ export default HomeScreen = ({navigation}) => {
                     <Button
                         title="Items"
                         onPress={() => navigation.navigate('Aliments')}
+
                     />
                 </TouchableOpacity>
                 </View>
                 <View>
                     <Text>Petit Déjeuner</Text>
                     <View>
-                        <Text>fqsfdqsfsq</Text>
-                        <Text>fqsfdqsfsq</Text>
+
+
+
+
+                        <FlatList
+                        data={value}
+                        renderItem={({item}) => <Text>{addAliments?route.params.tag_name:'aucun aliment'}</Text>}
+                        keyExtractor={item => item.id}
+                        />
+
+
+
                     </View>
 
 

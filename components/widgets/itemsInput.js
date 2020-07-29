@@ -1,13 +1,15 @@
 
 
-import React from 'react';
+import React, {useState} from 'react';
 import {
     View,
     Text,
     Button, StyleSheet, TouchableOpacity,
 } from 'react-native';
 
-export default ItemsInput = ({items}) => {
+export default ItemsInput = ({items,navigation}) => {
+
+
     return (
 
 
@@ -17,6 +19,13 @@ export default ItemsInput = ({items}) => {
             </Text>
 
                 <Button
+                    onPress={() => navigation.navigate('Home',{
+                        //items et non items.data car dans homescreen seul item a été spécifié
+                        tag_name: items,
+                        brand_name :items
+
+
+                    })}
                     title={"+"}
                 />
 
