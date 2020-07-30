@@ -1,6 +1,6 @@
+
 import 'react-native-gesture-handler';
 
-import AddItems from "./AddItems";
 
 import React, {useEffect, useState} from 'react';
 import {
@@ -10,20 +10,20 @@ import {
     View,
     Text,
     Button,
-    FlatList, ListView
 } from 'react-native';
-import AsyncStorage from "@react-native-community/async-storage";
-import ItemsInput from "../widgets/itemsInput";
-import ListAliment from "../widgets/ListAliment";
+
+
 
 
 export default HomeScreen = ({route,navigation}) => {
 
-    const [value,setValue] = useState({})
+
+
 
 
 
     let addAliments = '';
+    console.log(addAliments)
     if(route.params) {
         addAliments = route.params.tag_name
     }
@@ -39,9 +39,9 @@ export default HomeScreen = ({route,navigation}) => {
                 <View style={styles.homeBox}>
                     <Text style={styles.homeTitleMoment}>Petit Déjeuner</Text>
                 </View>
-                <View>
-                    <Text>{addAliments}</Text>
-                </View>
+                <TouchableOpacity style={styles.listHome}>
+                    <Text>{addAliments} </Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.homeChildContainermMoments}>
                 <View style={styles.homeBox}>
@@ -56,11 +56,16 @@ export default HomeScreen = ({route,navigation}) => {
             <View style={styles.homeTitleChildMomentsContainer}>
                 <TouchableOpacity>
                     <Button
-                        title="Items"
+                        title="Search List"
                         onPress={() => navigation.navigate('Aliments')}
                     />
                 </TouchableOpacity>
+                <Button
+                    title="Async"
+                    onPress={() => navigation.navigate('test')}
+                />
             </View>
+
 
         </View>
 
@@ -73,26 +78,34 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     homeChildContainermMoments: {
-
         width: '88%',
         flex: 1,
 
     },
     homeTitleChildMomentsContainer: {
+
         width:'88%'
     },
     homeChildBoxBfContainer:{
+
         flex:1,
         backgroundColor:'cyan'
     },
     homeTitleMoment:{
+    color:'white',
     fontSize: 25,
 
 
     },
     homeBox:{
+
         width:'100%',
         backgroundColor: '#01BCE7',
+    },
+    listHome:{
+        flexDirection:"row",
+        margin: 30,
+        justifyContent: 'space-between',
     }
 
 
