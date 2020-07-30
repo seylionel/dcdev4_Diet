@@ -76,10 +76,11 @@ export default ItemsInput = ({items, navigation}) => {
                 <Button
                     onPress={() => navigation.navigate("Aujourd'hui", {
                             //items et non items.data car dans homescreen seul item a été spécifié
+
                             id: Math.random().id,
                             tag_name: items,
                             brand_name: items
-                        },{onPress}
+                        }
                     )
                     }
                     onSubmitEditing={onSubmitEditing}

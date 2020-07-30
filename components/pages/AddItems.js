@@ -27,6 +27,8 @@ export default AddItems = ({navigation, route}) => {
     const [textInputValueSearchList, setTextInputValueSearchList] = useState('')
 
 
+  /**UseEffect permettra d'afficher le contenu de getItems au démarrage de la page**/
+
     useEffect(() => {
         getItems()
 
@@ -35,8 +37,7 @@ export default AddItems = ({navigation, route}) => {
     /** Appel API **/
 
     const getItems = async () => {
-        if (textInputValueSearchList !== '') {
-
+        try {
 
             let response = await fetch(
                 'https://trackapi.nutritionix.com/v2/search/instant?query=' + textInputValueSearchList, {
@@ -48,17 +49,18 @@ export default AddItems = ({navigation, route}) => {
             );
             let jsonResponse = await response.json();
 
-//(jsonResponse.network car nous il s'agit d'un objet/jsonResponse si ça avait été un tableau
             if (jsonResponse) {
-                // le spread operator va étendre le tableau. Les index common et brand vont se fondre dans un tableau [data]
+/** Le spread operator ici développera l'objet de l'API et le rendra itérable comme un tableau. On sera désormais en mesure
+ * de parcourir ce tablau en passant par la variable data
+ * **/
                 const data = [...jsonResponse.branded, ...jsonResponse.common]
                 setSearchList(data);
-
-
             }
+
+        alert('Appel réussi')
+        }catch (e) {
+            alert('Aucun appel à l\'API')
         }
-
-
     }
 
 
@@ -66,6 +68,7 @@ export default AddItems = ({navigation, route}) => {
 
 
         <View style={styles.homeMainContainer}>
+
 
             <SearchBar
                 placeholder="Type Here..."
@@ -76,14 +79,15 @@ export default AddItems = ({navigation, route}) => {
             <Button title={'Chercher'}
                     onPress={() => getItems()}
 
+
             />
 
-
+/
             <FlatList
                 data={searchList}
-                //?? si tag existe afficher tag_name/si brand existe afficher brand/
+                //On récupère item pour l'envoyer au composant itemsinput. L'itéation se fera sur item. On envoi les props également au composant Itemsinput
                 renderItem={({item}) =>
-
+                    //?? si tag existe afficher tag_name/si brand existe afficher brand/
                     <ItemsInput items={item.tag_name ?? item.brand_name} content={item.data} navigation={navigation}/>
 
 

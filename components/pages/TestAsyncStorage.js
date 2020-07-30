@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 /**Je crée une clé d'identification de la donnée stockée**/
 
-const STORAGE_KEY = '@save_age'
+const STORAGE_KEY = '@save_name'
 
 const App = () => {
 

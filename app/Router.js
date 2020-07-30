@@ -24,6 +24,12 @@ export default Router = () => {
 
     return (
 
+
+
+        /** Navigation de la page toute entière
+         *  Ajout des transitions entre les vues
+         * **/
+
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen name={"Aujourd'hui"} component={HomeScreen}/>

@@ -65,8 +65,6 @@ export default HomeScreen = ({route,navigation}) => {
                     onPress={() => navigation.navigate('test')}
                 />
             </View>
-
-
         </View>
 
     );
@@ -80,6 +78,7 @@ const styles = StyleSheet.create({
     homeChildContainermMoments: {
         width: '88%',
         flex: 1,
+        borderWidth: StyleSheet.hairlineWidth
 
     },
     homeTitleChildMomentsContainer: {
