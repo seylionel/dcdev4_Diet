@@ -42,7 +42,7 @@ const App = () => {
  *
  * AsyncStorage.getItem -- va permettre un enregistrement de l'âge si c'est différent de null
  */
-
+//grâce à cela le reste du code ne sera pas bloquer en attendant l'exécution de la fonction
     const readData = async () => {
         try {
             const userName = await AsyncStorage.getItem(STORAGE_KEY)
@@ -82,6 +82,7 @@ const App = () => {
      */
     const onChangeText = userName => setName(userName)
 
+    //si name est false, donc ne contient pas le données prévue on enregistre alors dans name les nouvelles données et on set pour modifier le state
     const onSubmitEditing = () => {
         if (!name) return
 
