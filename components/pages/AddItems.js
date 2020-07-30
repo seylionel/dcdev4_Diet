@@ -23,11 +23,8 @@ import ItemsInput from "../widgets/itemsInput";
 export default AddItems = ({navigation, route}) => {
 
 
-    const [items, setItems] = useState([])
-    const [textInputValue, setTextInputValue] = useState('')
-    const [fillContainer, setFillContainer] = useState(
-        []
-    )
+    const [searchList, setSearchList] = useState([])
+    const [textInputValueSearchList, setTextInputValueSearchList] = useState('')
 
 
     useEffect(() => {
@@ -35,14 +32,14 @@ export default AddItems = ({navigation, route}) => {
 
     }, [])
 
-/** Appel API **/
+    /** Appel API **/
 
     const getItems = async () => {
-        if (textInputValue !== '') {
+        if (textInputValueSearchList !== '') {
 
 
             let response = await fetch(
-                'https://trackapi.nutritionix.com/v2/search/instant?query=' + textInputValue, {
+                'https://trackapi.nutritionix.com/v2/search/instant?query=' + textInputValueSearchList, {
                     headers: {
                         'x-app-id': '509968a4',
                         'x-app-key': 'ec73d2b1bc9acc563ca89ab2d54f6bf9'
@@ -55,7 +52,7 @@ export default AddItems = ({navigation, route}) => {
             if (jsonResponse) {
                 // le spread operator va étendre le tableau. Les index common et brand vont se fondre dans un tableau [data]
                 const data = [...jsonResponse.branded, ...jsonResponse.common]
-                setItems(data);
+                setSearchList(data);
 
 
             }
@@ -65,7 +62,6 @@ export default AddItems = ({navigation, route}) => {
     }
 
 
-
     return (
 
 
@@ -73,8 +69,8 @@ export default AddItems = ({navigation, route}) => {
 
             <SearchBar
                 placeholder="Type Here..."
-                onChangeText={setTextInputValue}
-                value={textInputValue}
+                onChangeText={setTextInputValueSearchList}
+                value={textInputValueSearchList}
             />
 
             <Button title={'Chercher'}
@@ -84,7 +80,7 @@ export default AddItems = ({navigation, route}) => {
 
 
             <FlatList
-                data={items}
+                data={searchList}
                 //?? si tag existe afficher tag_name/si brand existe afficher brand/
                 renderItem={({item}) =>
 
@@ -92,7 +88,7 @@ export default AddItems = ({navigation, route}) => {
 
 
                 }
-                keyExtractor={item => Math.random().id}
+                keyExtractor={(item, index) => index.toString()}
             />
 
         </View>

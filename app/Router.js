@@ -11,7 +11,7 @@ import createStackNavigator from "@react-navigation/stack/src/navigators/createS
 
 import HomeScreen from "../components/pages/HomeScreen";
 import AddItems from "../components/pages/AddItems";
-import itemsInput from "../components/widgets/itemsInput";
+
 
 
 const Stack = createStackNavigator();
@@ -24,7 +24,7 @@ export default Router = () => {
 
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name={"Home"} component={HomeScreen}/>
+                <Stack.Screen name={"Aujourd'hui"} component={HomeScreen}/>
                 <Stack.Screen name={"Aliments"} component={AddItems} />
             </Stack.Navigator>
         </NavigationContainer>

@@ -15,12 +15,13 @@ export default ItemsInput = ({items,navigation}) => {
 
         <View>
             <TouchableOpacity style={styles.displayFoodContainer}>
-            <Text  style={styles.displayFoodText}>{items}
-            </Text>
+                <Text  style={styles.displayFoodText}>{items}
+                </Text>
 
                 <Button
-                    onPress={() => navigation.navigate('Home',{
+                    onPress={() => navigation.navigate("Aujourd'hui",{
                         //items et non items.data car dans homescreen seul item a été spécifié
+                        id: Math.random().id,
                         tag_name: items,
                         brand_name :items
 

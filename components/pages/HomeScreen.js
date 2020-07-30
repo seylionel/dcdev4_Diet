@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler';
+
 import AddItems from "./AddItems";
 
 import React, {useEffect, useState} from 'react';
@@ -9,75 +10,56 @@ import {
     View,
     Text,
     Button,
-    FlatList
+    FlatList, ListView
 } from 'react-native';
 import AsyncStorage from "@react-native-community/async-storage";
 import ItemsInput from "../widgets/itemsInput";
+import ListAliment from "../widgets/ListAliment";
 
 
 export default HomeScreen = ({route,navigation}) => {
-    const [value,setValue] = useState([]);
 
-    useEffect(() => {
-        if(route.params){
-            let newState;
-            newState = [...value, {
-                id:route.params.id,
-                tag_name: route.params.tag_name
-            }]
-            setValue(newState)
-        }
-
-    }, [route.params])
+    const [value,setValue] = useState({})
 
 
-    const addAliments = route.params;
+
+    let addAliments = '';
+    if(route.params) {
+        addAliments = route.params.tag_name
+    }
+
+
 
 
     return (
 
 
         <View style={styles.homeMainContainer}>
-            <View style={styles.homeChildContainerBreakFast}>
-                <View style={styles.homeTitleChildBfContainer}>
-                    <Text>Aujourd'hui</Text>
-                    <TouchableOpacity>
+            <View style={styles.homeChildContainermMoments}>
+                <View style={styles.homeBox}>
+                    <Text style={styles.homeTitleMoment}>Petit Déjeuner</Text>
+                </View>
+                <View>
+                    <Text>{addAliments}</Text>
+                </View>
+            </View>
+            <View style={styles.homeChildContainermMoments}>
+                <View style={styles.homeBox}>
+                <Text style={styles.homeTitleMoment}>Déjeuner</Text>
+                </View>
+            </View>
+            <View style={styles.homeChildContainermMoments}>
+                <View style={styles.homeBox}>
+                <Text style={styles.homeTitleMoment}>Dîner</Text>
+                </View>
+            </View>
+            <View style={styles.homeTitleChildMomentsContainer}>
+                <TouchableOpacity>
                     <Button
                         title="Items"
                         onPress={() => navigation.navigate('Aliments')}
-
                     />
                 </TouchableOpacity>
-                </View>
-                <View>
-                    <Text>Petit Déjeuner</Text>
-                    <View>
-
-
-
-
-                        <FlatList
-                        data={value}
-                        renderItem={({item}) => <Text>{addAliments?route.params.tag_name:'aucun aliment'}</Text>}
-                        keyExtractor={item => item.id}
-                        />
-
-
-
-                    </View>
-
-
-                </View>
-
-
-            </View>
-            <View style={styles.homeChildContainerLunch}>
-                <Text>Déjeuner</Text>
-
-            </View>
-            <View style={styles.homeChildContainerDinner}>
-                <Text>Dîner</Text>
-
             </View>
 
         </View>
@@ -86,27 +68,32 @@ export default HomeScreen = ({route,navigation}) => {
 };
 const styles = StyleSheet.create({
     homeMainContainer: {
+        backgroundColor:'#F0FFFF',
+        alignItems:'center',
         flex: 1,
     },
-    homeChildContainerBreakFast: {
+    homeChildContainermMoments: {
+
+        width: '88%',
         flex: 1,
-        backgroundColor: 'green'
+
     },
-    homeTitleChildBfContainer: {
-        alignItems: 'center',
+    homeTitleChildMomentsContainer: {
+        width:'88%'
     },
     homeChildBoxBfContainer:{
         flex:1,
         backgroundColor:'cyan'
     },
-    homeChildContainerLunch: {
-        flex: 1,
-        backgroundColor: 'red'
+    homeTitleMoment:{
+    fontSize: 25,
+
+
     },
-    homeChildContainerDinner: {
-        flex: 1,
-        backgroundColor: 'yellow'
-    },
+    homeBox:{
+        width:'100%',
+        backgroundColor: '#01BCE7',
+    }
 
 
 });
