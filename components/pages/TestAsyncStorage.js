@@ -29,9 +29,9 @@ const App = () => {
     const saveData = async () => {
         try {
             await AsyncStorage.setItem(STORAGE_KEY, name)
-            alert('Data successfully saved')
+            alert('Donnée sauvée')
         } catch (e) {
-            alert('Failed to save the data to the storage')
+            alert('Echec de sauvegarde')
         }
     }
 
@@ -51,7 +51,7 @@ const App = () => {
                 setName(userName)
             }
         } catch (e) {
-            alert('Failed to fetch the data from storage')
+            alert('Erreur')
         }
     }
 
@@ -69,9 +69,9 @@ const App = () => {
     const clearStorage = async () => {
         try {
             await AsyncStorage.clear()
-            alert('Storage successfully cleared!')
+            alert('Stockage réussi')
         } catch (e) {
-            alert('Failed to clear the async storage.')
+            alert('Stockage échoué')
         }
     }
 

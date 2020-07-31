@@ -82,7 +82,7 @@ export default AddItems = ({navigation, route}) => {
 
             />
 
-/
+
             <FlatList
                 data={searchList}
                 //On récupère item pour l'envoyer au composant itemsinput. L'itéation se fera sur item. On envoi les props également au composant Itemsinput
@@ -92,7 +92,7 @@ export default AddItems = ({navigation, route}) => {
 
 
                 }
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={(item, id) => id.toString()}
             />
 
         </View>
